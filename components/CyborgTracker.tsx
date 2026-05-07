@@ -19,9 +19,14 @@ export default function CyborgTracker() {
   const elevation = useElevation(route.coords);
   const ms = useMilestones();
   const [actualKm, setActualKm] = useState<number | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [elevOpen, setElevOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth > 768 : true
+  );
+  const [elevOpen, setElevOpen] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth > 768 : true
+  );
   const [editMode, setEditMode] = useState(false);
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
 
   useEffect(() => {
     const fromHash = loadKmFromHash();
@@ -80,9 +85,9 @@ export default function CyborgTracker() {
         style={{
           position: "absolute",
           top: 0,
-          left: sidebarOpen ? "var(--sidebar-width)" : 0,
+          left: sidebarOpen && !isMobile ? "var(--sidebar-width)" : 0,
           right: 0,
-          bottom: elevOpen ? 150 : 0,
+          bottom: elevOpen ? (isMobile ? 100 : 150) : 0,
           zIndex: 1,
           transition: "all 0.3s",
         }}
@@ -110,10 +115,10 @@ export default function CyborgTracker() {
       <div
         style={{
           position: "absolute",
-          left: sidebarOpen ? "var(--sidebar-width)" : 0,
+          left: sidebarOpen && !isMobile ? "var(--sidebar-width)" : 0,
           right: 0,
           bottom: 0,
-          height: elevOpen ? 150 : 0,
+          height: elevOpen ? (isMobile ? 100 : 150) : 0,
           background: "var(--bg-primary)",
           borderTop: "1px solid var(--border)",
           zIndex: 100,
@@ -134,7 +139,7 @@ export default function CyborgTracker() {
         onClick={() => setElevOpen(!elevOpen)}
         style={{
           position: "absolute",
-          bottom: elevOpen ? 155 : 5,
+          bottom: elevOpen ? (isMobile ? 105 : 155) : 5,
           right: 120,
           zIndex: 1000,
           background: "var(--bg-secondary)",

@@ -225,7 +225,8 @@ export function Sidebar({
         style={{
           position: "absolute",
           top: 16,
-          left: isOpen ? "calc(var(--sidebar-width) + 12px)" : 12,
+          left: isOpen ? (typeof window !== "undefined" && window.innerWidth <= 768 ? "auto" : "calc(var(--sidebar-width) + 12px)") : 12,
+          right: isOpen && typeof window !== "undefined" && window.innerWidth <= 768 ? 12 : "auto",
           zIndex: 1001,
           width: 36,
           height: 36,
