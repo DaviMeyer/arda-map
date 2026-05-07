@@ -1,0 +1,90 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@font-face {
+  font-family: "DM Mono";
+  src: url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap");
+}
+
+:root {
+  --bg-primary: #0a0c0f;
+  --bg-secondary: #12151a;
+  --bg-tertiary: #1a1e25;
+  --bg-hover: #222830;
+  --text-primary: #e8e6e1;
+  --text-secondary: #8a8780;
+  --text-muted: #555350;
+  --accent: #00ffd5;
+  --accent-dim: #00ffd533;
+  --danger: #ff4d4d;
+  --danger-dim: #ff4d4d22;
+  --warning: #ffb800;
+  --warning-dim: #ffb80033;
+  --live: #ff3b5c;
+  --live-dim: #ff3b5c33;
+  --border: #2a2d33;
+  --sidebar-width: 380px;
+  --font-mono: "DM Mono", monospace;
+  --font-sans: "Instrument Sans", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.leaflet-container {
+  background: var(--bg-primary) !important;
+}
+.leaflet-control-zoom {
+  display: none !important;
+}
+.leaflet-control-attribution {
+  background: var(--bg-secondary) !important;
+  color: var(--text-muted) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 9px !important;
+  border-radius: 4px 0 0 0 !important;
+}
+.leaflet-control-attribution a {
+  color: var(--text-secondary) !important;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 var(--live);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+@keyframes live-pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
