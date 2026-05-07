@@ -22,11 +22,21 @@ export function ElevationProfile({ elevationData, actualKm, idealKm, routeCoords
     draw();
   });
 
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const observer = new ResizeObserver(() => draw());
+    observer.observe(wrap);
+    return () => observer.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [elevationData, actualKm, idealKm]);
+
   function draw() {
     const canvas = canvasRef.current;
     const wrap = wrapRef.current;
     if (!canvas || !wrap || !elevationData || elevationData.length < 2) return;
     const rect = wrap.getBoundingClientRect();
+    if (rect.width < 10 || rect.height < 10) return;
     canvas.width = rect.width * 2;
     canvas.height = rect.height * 2;
     const ctx = canvas.getContext("2d");
@@ -173,7 +183,7 @@ export function ElevationProfile({ elevationData, actualKm, idealKm, routeCoords
       onClick={handleClick}
       style={{ width: "100%", height: "100%", position: "relative", cursor: "crosshair" }}
     >
-      <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />
+      <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
       <div
         ref={tooltipRef}
         style={{
